@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Reader</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background: #f5f3ef;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+  }
+
+  .box {
+    width: 800px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .line {
+    display: block;
+    margin: 12px 0;
+    padding: 10px 12px;
+    background: #faf9f7;
+    border-left: 4px solid #333;
+    border-radius: 6px;
+    font-size: 18px;
+    line-height: 1.8;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <div id="content">Loading...</div>
+</div>
+
+<script>
+fetch("1.html")
+  .then(res => {
+    if (!res.ok) throw new Error("File not found");
+    return res.text();
+  })
+  .then(text => {
+    const lines = text
+      .split("\n")
+      .map(l => l.trim())
+      .filter(Boolean);
+
+    document.getElementById("content").innerHTML =
+      lines.map(l => `<div class="line">${l}</div>`).join("");
+  })
+  .catch(err => {
+    document.getElementById("content").innerHTML =
+      "❌ Failed to load 1.html";
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>
