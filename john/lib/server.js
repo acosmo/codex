@@ -16,6 +16,14 @@ app.use((req, res, next) => {
   next();
 });
 
+
+app.use((req, res, next) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  next();
+});
+
 app.use(express.static(path.join(__dirname, "..")));
 
 // 📩 SAVE ROUTE
@@ -52,7 +60,7 @@ app.post("/save", (req, res) => {
 });
 
 // 🚀 SERVER START
-app.listen(8000, () => {
+app.listen(8000, "0.0.0.0", () => {
   console.log("\n==============================");
   console.log("🚀 EXPRESS SERVER STARTED");
   console.log("🌐 http://localhost:8000");
