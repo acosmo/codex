@@ -37,6 +37,7 @@ function loadPage() {
         container.appendChild(div);
       });
     });
+    console.log("SCRIPT LOADED");
 }
 
 // PAGE CHANGE
@@ -47,6 +48,8 @@ function goPage(n) {
 
 // MODAL OPEN
 function openModal(el) {
+  console.log("CLICK WORKS → openModal triggered");
+
   selectedLine = el;
   document.getElementById("editText").value = el.innerText;
   document.getElementById("modal").style.display = "flex";
