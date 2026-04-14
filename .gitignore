@@ -1,3 +1,6 @@
 .local
 node_modules/
 logs/
+*bkp*
+*checkpoints*
+*nohup*
