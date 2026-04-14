@@ -24,12 +24,18 @@ function loadPage() {
     .then(text => {
       const lines = text.split("\n").filter(l => l.trim());
 
-      document.getElementById("content").innerHTML =
-        lines.map((l, i) =>
-          `<div class="line" onclick="openModal(this)">
-            ${l}
-          </div>`
-        ).join("");
+      const container = document.getElementById("content");
+      container.innerHTML = "";
+
+      lines.forEach(l => {
+        const div = document.createElement("div");
+        div.className = "line";
+        div.textContent = l;
+
+        div.addEventListener("click", () => openModal(div));
+
+        container.appendChild(div);
+      });
     });
 }
 
