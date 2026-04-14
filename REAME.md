@@ -11,3 +11,7 @@ cd /mnt/c/Users/asus/git/codex
 jupyter-notebook --no-browser --ip=0.0.0.0 --port=8888
 
 
+-- stats
+cd codex/john/logs
+./ip.sh
+./get.sh IP

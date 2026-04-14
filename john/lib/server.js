@@ -19,7 +19,7 @@ app.post("/save", (req, res) => {
   const stamp = now.toISOString().replace("T", " ").split(".")[0];
 
   const logLine =
-    `${stamp} | IP:${ip} | FILE:${page}.html | VERSE:${line} | TEXT:${text}\n`;
+    `${stamp} | IP:${ip} | FILE:${page}.html | VERSE:${Number(line) + 1} | TEXT:${text}\n`;
 
   fs.appendFileSync(
     path.join(__dirname, "..", "logs/edits.log"),
