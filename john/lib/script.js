@@ -1,7 +1,7 @@
 let page = 1;
 let maxPages = 21;
 
-let selectedLine = null;
+let editing = null;
 
 // NAV
 function buildNav() {
@@ -27,52 +27,75 @@ function loadPage() {
       const container = document.getElementById("content");
       container.innerHTML = "";
 
-      lines.forEach(l => {
+      lines.forEach((l, index) => {
         const div = document.createElement("div");
         div.className = "line";
         div.textContent = l;
 
-        div.addEventListener("click", () => openModal(div));
+        div.addEventListener("click", () => makeEditable(div));
 
         container.appendChild(div);
       });
     });
-    console.log("SCRIPT LOADED");
+}
+
+// MAKE LINE EDITABLE
+function makeEditable(div) {
+  if (editing) return; // only one at a time
+
+  editing = div;
+
+  const textarea = document.createElement("textarea");
+  textarea.value = div.textContent;
+
+  // copy styling feel
+  textarea.style.width = "100%";
+  textarea.style.fontSize = "45px";
+  textarea.style.fontFamily = "Georgia, serif";
+  textarea.style.background = "#1a1a1a";
+  textarea.style.color = "#eaeaea";
+  textarea.style.border = "1px solid #444";
+  textarea.style.padding = "12px";
+  textarea.style.borderRadius = "6px";
+
+  div.replaceWith(textarea);
+  textarea.focus();
+
+  // SAVE ON BLUR
+  textarea.addEventListener("blur", () => saveEdit(textarea));
+
+  // SAVE ON ENTER
+  textarea.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      textarea.blur();
+    }
+  });
+}
+
+// SAVE EDIT
+function saveEdit(textarea) {
+  const newDiv = document.createElement("div");
+  newDiv.className = "line";
+  newDiv.textContent = textarea.value;
+
+  newDiv.addEventListener("click", () => makeEditable(newDiv));
+
+  textarea.replaceWith(newDiv);
+
+  fetch("/save", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: newDiv.textContent })
+  });
+
+  editing = null;
 }
 
 // PAGE CHANGE
 function goPage(n) {
   page = n;
   loadPage();
-}
-
-// MODAL OPEN
-function openModal(el) {
-  console.log("CLICK WORKS → openModal triggered");
-
-  selectedLine = el;
-  document.getElementById("editText").value = el.innerText;
-  document.getElementById("modal").style.display = "flex";
-}
-
-// CLOSE MODAL
-function closeModal() {
-  document.getElementById("modal").style.display = "none";
-}
-
-// SAVE TO SERVER
-function saveEdit() {
-  const text = document.getElementById("editText").value;
-
-  selectedLine.innerText = text;
-
-  fetch("/save", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text })
-  });
-
-  closeModal();
 }
 
 buildNav();
