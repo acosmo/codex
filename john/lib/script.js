@@ -32,6 +32,8 @@ function loadPage() {
         div.className = "line";
         div.textContent = l;
 
+        div.dataset.index = index;
+
         div.addEventListener("click", () => makeEditable(div));
 
         container.appendChild(div);
@@ -39,16 +41,17 @@ function loadPage() {
     });
 }
 
-// MAKE LINE EDITABLE
+// MAKE EDITABLE
 function makeEditable(div) {
-  if (editing) return; // only one at a time
+  if (editing) return;
 
   editing = div;
 
   const textarea = document.createElement("textarea");
   textarea.value = div.textContent;
 
-  // copy styling feel
+  textarea.dataset.index = div.dataset.index;
+
   textarea.style.width = "100%";
   textarea.style.fontSize = "45px";
   textarea.style.fontFamily = "Georgia, serif";
@@ -61,10 +64,8 @@ function makeEditable(div) {
   div.replaceWith(textarea);
   textarea.focus();
 
-  // SAVE ON BLUR
   textarea.addEventListener("blur", () => saveEdit(textarea));
 
-  // SAVE ON ENTER
   textarea.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -75,9 +76,14 @@ function makeEditable(div) {
 
 // SAVE EDIT
 function saveEdit(textarea) {
+  const index = textarea.dataset.index;
+  const newText = textarea.value;
+
   const newDiv = document.createElement("div");
   newDiv.className = "line";
-  newDiv.textContent = textarea.value;
+  newDiv.textContent = newText;
+
+  newDiv.dataset.index = index;
 
   newDiv.addEventListener("click", () => makeEditable(newDiv));
 
@@ -86,7 +92,11 @@ function saveEdit(textarea) {
   fetch("/save", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: newDiv.textContent })
+    body: JSON.stringify({
+      page: page,
+      line: index,
+      text: newText
+    })
   });
 
   editing = null;
@@ -98,5 +108,6 @@ function goPage(n) {
   loadPage();
 }
 
+// INIT
 buildNav();
 loadPage();
