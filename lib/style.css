@@ -32,6 +32,7 @@ body {
   margin: 15px 0;
 }
 
+/* NAV BUTTONS */
 .nav button {
   background: #333;
   color: white;
@@ -40,12 +41,22 @@ body {
   padding: 10px 20px;
   border-radius: 6px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .nav button:hover {
   background: #555;
 }
 
+/* 🔴 IMPORTANT: SELECTED STATE FIXED */
+.nav button.selected {
+  background: rgb(0, 0, 0) !important;
+  color: white !important;
+  font-weight: bold;
+  transform: scale(1.05);
+}
+
+/* CONTENT LINES */
 .line {
   display: block;
   margin: 12px 0;
@@ -56,6 +67,8 @@ body {
   font-size: 45px;
   line-height: 1.8;
 }
+
+/* MODAL */
 #modal {
   display: none;
   position: fixed;
@@ -68,20 +81,18 @@ body {
   align-items: center;
 }
 
-/* KEEP YOUR SIZE, ONLY DARKER + CLEANER */
 #modalContent {
-  background: #111;   /* darker but same structure */
+  background: #111;
   padding: 20px;
   border-radius: 10px;
   width: 500px;
   border: 1px solid #333;
 }
 
-/* DO NOT CHANGE SIZE FEEL TOO MUCH */
 #modal textarea {
   width: 100%;
   height: 150px;
-  font-size: 18px;     /* KEEP YOUR ORIGINAL */
+  font-size: 18px;
   font-family: Georgia, serif;
 
   background: #1a1a1a;
@@ -92,7 +103,6 @@ body {
   outline: none;
 }
 
-/* BUTTONS KEEP YOUR STYLE, JUST DARK IMPROVE */
 #modal button {
   margin-top: 10px;
   font-size: 20px;
@@ -110,8 +120,32 @@ body {
   background: #555;
 }
 
-/* optional: make SAVE stand out */
 #modal button:first-of-type {
   background: #2ecc71;
   color: black;
+}
+
+/* fallback selected (if used outside nav) */
+.selected {
+  background: rgb(243, 185, 185) !important;
+  color: white !important;
+}
+
+.editing {
+  width: 100%;
+  min-height: 400px;   /* 👈 gives more editing space */
+  font-size: 45px;
+  font-family: Georgia, serif;
+
+  background: #000000;
+  color: #eaeaea;
+
+  border: 1px solid #444;
+  padding: 14px;
+  border-radius: 6px;
+
+  outline: none;
+
+  line-height: 1.6;    /* 👈 better readability while editing */
+  resize: vertical;    /* 👈 user can drag height */
 }
