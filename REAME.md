@@ -4,7 +4,7 @@ nohup python3 -m http.server 8000 --directory john &
 ==
 cd /mnt/c/Users/asus/git/codex/john
 npm install express
-node lib/server.js
+nohup node lib/server.js > logs/nohup.log 2>&1 &
 ==
 
 cd /mnt/c/Users/asus/git/codex
