@@ -1,8 +1,5 @@
-cd /mnt/c/Users/asus/git/codex
-nohup python3 -m http.server 8000 --directory john &
-
 ==
-cd /mnt/c/Users/asus/git/codex/john
+cd /mnt/c/Users/asus/git/codex
 npm install express
 nohup node lib/server.js > logs/nohup.log 2>&1 &
 ==
