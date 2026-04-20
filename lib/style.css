@@ -149,3 +149,26 @@ body {
   line-height: 1.6;    /* 👈 better readability while editing */
   resize: vertical;    /* 👈 user can drag height */
 }
+
+.line {
+  position: relative;
+}
+
+.verse-num {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+
+  font-size: 18px;
+  color: #ffffff;
+
+  opacity: 0.8;
+}
+
+.verse-text {
+  font-size: 45px;
+  line-height: 1.8;
+
+  display: block;
+  padding-right: 60px; /* space for number */
+}
