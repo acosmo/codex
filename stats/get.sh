@@ -1,27 +1,25 @@
 #!/bin/bash
-
 LOG_FILE="../logs/edits.log"
 IP="$1"
 
 awk -F'|' -v ip="$IP" '
 $2 ~ ip {
-    file=$3
+    book=$3
     verse=$4
     text=$5
 
-    sub(/.*FILE:/, "", file)
+    sub(/.*BOOK:/, "", book)
     sub(/.*VERSE:/, "", verse)
     sub(/.*TEXT:/, "", text)
 
-    gsub(/[^0-9]/, "", file)
-    gsub(/[^0-9]/, "", verse)
+    gsub(/^ +| +$/, "", book)
+    gsub(/^ +| +$/, "", verse)
+    gsub(/^ +| +$/, "", text)
 
-    key=file ":" verse
-
-    data[key]=file ":" verse " " text
+    key=book ":" verse
+    data[key]=book " " verse " | " text
 }
-
 END {
     for (k in data)
         print data[k]
-}' "$LOG_FILE" | sort -t':' -k1,1n -k2,2n
+}' "$LOG_FILE" | sort
