@@ -172,3 +172,8 @@ body {
   display: block;
   padding-right: 60px; /* space for number */
 }
+
+.line.active-verse {
+  border-left: 4px solid #fdfdfd;
+  background: #000000;
+}
