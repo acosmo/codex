@@ -10,4 +10,4 @@ awk -F'|' '
 END {
     for (i in count)
         print i, count[i]
-}' ../logs/edits.log | sort -k2 -nr
+}' ./logs/edits.log | sort -k2 -nr

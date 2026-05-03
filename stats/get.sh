@@ -1,5 +1,5 @@
 #!/bin/bash
-LOG_FILE="../logs/edits.log"
+LOG_FILE="./logs/edits.log"
 IP="$1"
 
 awk -F'|' -v ip="$IP" '
