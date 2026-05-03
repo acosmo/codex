@@ -24,4 +24,4 @@ $2 ~ ip {
 END {
     for (k in data)
         print data[k]
-}' "$LOG_FILE" | sort -r
+}' "$LOG_FILE" | sort
