@@ -14,6 +14,6 @@ crontab -e
 
 
 -- stats
-cd codex/john/logs
-./ip.sh
-./get.sh IP
+cd codex/
+./stats/get.sh 
+./stats/get.sh IP
